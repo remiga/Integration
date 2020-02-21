@@ -14,16 +14,12 @@ class InitializationController extends Controller
         $middleware = new Oauth1([
             'consumer_key'    => env('CONSUMER_KEY'),
             'consumer_secret' => '',
-            //'private_key_file' => '/var/www/restapi/storage/keys_espbi/private_kul_test.pem',
-            'private_key_file' => '/var/www/restapi/storage/keys_espbi/private_kul_prod.pem',//kul ranktas
+            'private_key_file' => env('CONSUMER_KEY_PATH'),
             'signature_method' => Oauth1::SIGNATURE_METHOD_RSA,
             'private_key_passphrase' => '',
         ]);
         $stack->push($middleware);
-        //$requestor_id = '1000144237';/*Testines aplinkos requestor*/
-        //$requestor_id = '1002442536';/*Testines aplinkos requestor*/
-
-        $requestor_id = '1000112859'; /*Produkcines aplinkos requestor*/
+        $requestor_id = env('MAIN_REQUESTOR_ID'),; /*Produkcines aplinkos requestor*/
         switch ($generationParameter) {
             case 'getResource':
                 $general = ['requestor_id' => $requestor_id, 'update' => 'true', 'content-type' => 'application/json'];
